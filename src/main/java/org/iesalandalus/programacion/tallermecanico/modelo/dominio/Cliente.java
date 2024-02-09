@@ -1,18 +1,16 @@
 package org.iesalandalus.programacion.tallermecanico.modelo.dominio;
 
 import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import static java.lang.Integer.parseInt;
 
 public class Cliente {
-    private static final String ER_NOMBRE = "[A-ZÁÉÍÓÚ][a-záéíóú]+( [A-ZÁÉÍÓÚ][a-záéíóú]+)?";
-    private static final String ER_DNI = "(//d{8})([A-Z])";
-    private static final String ER_TELEFONO = "6//d{8}";
+    private static final String ER_NOMBRE = "[A-ZÁÉÍÓÚ][a-záéíóú]+( [A-ZÁÉÍÓÚ][a-záéíóú]+)*";
+    private static final String ER_DNI = "\\d{8}[A-Za-z]";
+    private static final String ER_TELEFONO = "\\d{9}";
     String nombre;
     String dni;
     String telefono;
-    Matcher comparador;
-    Pattern patron;
 
     public Cliente(String nombre, String dni, String telefono){
         setNombre(nombre);
@@ -20,14 +18,16 @@ public class Cliente {
         setTelefono(telefono);
     }
     public Cliente(Cliente cliente){
-
+        Objects.requireNonNull(cliente, "No es posible copiar un cliente nulo.");
+        setNombre(cliente.nombre);
+        setDni(cliente.dni);
+        setTelefono(cliente.telefono);
     }
 
     public void setNombre(String nombre) {
-        patron = Pattern.compile(ER_NOMBRE);
-        comparador = patron.matcher(nombre);
-        if (!comparador.find()){
-            throw new IllegalArgumentException();
+        Objects.requireNonNull(nombre, "El nombre no puede ser nulo.");
+        if (!nombre.matches(ER_NOMBRE)){
+            throw new IllegalArgumentException("El nombre no tiene un formato válido.");
         }
         this.nombre = nombre;
     }
@@ -36,27 +36,28 @@ public class Cliente {
     }
 
     private void setDni(String dni) {
-        patron = Pattern.compile(ER_DNI);
-        comparador = patron.matcher(dni);
-        if (!comprobarLetraDni(dni) || !comparador.find()){
-            throw new IllegalArgumentException();
+        Objects.requireNonNull(dni, "El DNI no puede ser nulo.");
+        if (!dni.matches(ER_DNI)){
+            throw new IllegalArgumentException("El DNI no tiene un formato válido.");
+        } else if (!comprobarLetraDni(dni)){
+            throw new IllegalArgumentException("La letra del DNI no es correcta.");
         }
         this.dni = dni;
     }
     private boolean comprobarLetraDni(String dni){
         String letras_dni = new String("TRWAGMYFPDXBNJZSQVHLCKE");
-        int resto = dni.indexOf(0, 7) % 23;
-        return letras_dni.charAt(resto) == dni.charAt(8);
+        int numerosDni = parseInt(dni.substring(0, 8));
+        int resto = numerosDni % 23;
+        return letras_dni.charAt(resto) == Character.toUpperCase(dni.charAt(8));
     }
     public String getDni() {
         return dni;
     }
 
     public void setTelefono(String telefono) {
-        patron = Pattern.compile(ER_TELEFONO);
-        comparador = patron.matcher(telefono);
-        if (!comparador.find()){
-            throw new IllegalArgumentException();
+        Objects.requireNonNull(telefono, "El teléfono no puede ser nulo.");
+        if (!telefono.matches(ER_TELEFONO)){
+            throw new IllegalArgumentException("El teléfono no tiene un formato válido.");
         }
         this.telefono = telefono;
     }
@@ -65,7 +66,7 @@ public class Cliente {
     }
 
     public static Cliente get(String dni){
-        
+        return new Cliente("Patricio Estrella", dni, "950111111");
     }
 
     @Override
@@ -73,16 +74,16 @@ public class Cliente {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Cliente cliente = (Cliente) o;
-        return Objects.equals(nombre, cliente.nombre) && Objects.equals(dni, cliente.dni) && Objects.equals(telefono, cliente.telefono) && Objects.equals(comparador, cliente.comparador) && Objects.equals(patron, cliente.patron);
+        return Objects.equals(nombre, cliente.nombre) && Objects.equals(dni, cliente.dni) && Objects.equals(telefono, cliente.telefono);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nombre, dni, telefono, comparador, patron);
+        return Objects.hash(nombre, dni, telefono);
     }
 
     @Override
     public String toString() {
-        return String.format("Cliente[nombre=%s, dni=%s, telefono=%s, comparador=%s, patron=%s]", this.nombre, this.dni, this.telefono, this.comparador, this.patron);
+        return String.format("%s - %s (%s)", this.nombre, this.dni, this.telefono);
     }
 }
