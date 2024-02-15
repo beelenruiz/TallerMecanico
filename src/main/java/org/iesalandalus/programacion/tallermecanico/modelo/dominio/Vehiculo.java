@@ -2,24 +2,14 @@ package org.iesalandalus.programacion.tallermecanico.modelo.dominio;
 
 import java.util.Objects;
 
-public class Vehiculo {
+public record Vehiculo(String marca, String modelo, String matricula) {
     private static final String ER_MARCA = "[A-Z]+[a-z]*([ -]?[A-Z][a-z]+)*";
     private static final String ER_MATRICULA = "\\d{4}[^AEIOU]{3}";
-    String marca;
-    String modelo;
-    String matricula;
 
-    public Vehiculo(String marca, String modelo, String matricula){
+    public Vehiculo{
         validarMarca(marca);
         validarModelo(modelo);
         validarMatricula(matricula);
-    }
-
-    public Vehiculo(Vehiculo vehiculo){
-        Objects.requireNonNull(vehiculo, "No es posible copiar un vehículo nulo.");
-        marca = vehiculo.marca();
-        modelo = vehiculo.modelo();
-        matricula = vehiculo.matricula();
     }
 
     public String matricula() {
@@ -37,7 +27,6 @@ public class Vehiculo {
         if (!marca.matches(ER_MARCA)){
             throw new IllegalArgumentException("La marca no tiene un formato válido.");
         }
-        this.marca = marca;
     }
 
     private void validarModelo(String modelo) {
@@ -45,7 +34,6 @@ public class Vehiculo {
         if (modelo.isBlank()){
             throw new IllegalArgumentException("El modelo no puede estar en blanco.");
         }
-        this.modelo = modelo;
     }
 
     private void validarMatricula(String matricula) {
@@ -53,7 +41,6 @@ public class Vehiculo {
         if (!matricula.matches(ER_MATRICULA)){
             throw new IllegalArgumentException("La matrícula no tiene un formato válido.");
         }
-        this.matricula = matricula;
     }
 
     public static Vehiculo get(String matricula){

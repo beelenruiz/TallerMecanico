@@ -11,7 +11,6 @@ public class Clientes {
     private final List<Cliente> coleccionCLiente;
     public Clientes(){
         coleccionCLiente  = new ArrayList<>();
-
     }
 
     public List<Cliente> get(){
