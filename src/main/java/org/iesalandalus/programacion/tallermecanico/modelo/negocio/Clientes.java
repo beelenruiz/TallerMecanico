@@ -8,19 +8,19 @@ import java.util.List;
 import java.util.Objects;
 
 public class Clientes {
-    private final List<Cliente> coleccionCLiente;
+    private final List<Cliente> coleccionCliente;
     public Clientes(){
-        coleccionCLiente  = new ArrayList<>();
+        coleccionCliente = new ArrayList<>();
     }
 
     public List<Cliente> get(){
-        return new ArrayList<>(coleccionCLiente);
+        return new ArrayList<>(coleccionCliente);
     }
 
     public void insertar(Cliente cliente) throws OperationNotSupportedException {
         Objects.requireNonNull(cliente, "No se puede insertar un cliente nulo.");
-        if (!coleccionCLiente.contains(cliente)){
-            coleccionCLiente.add(cliente);
+        if (!coleccionCliente.contains(cliente)){
+            coleccionCliente.add(cliente);
         } else {
             throw new OperationNotSupportedException("Ya existe un cliente con ese DNI.");
         }
@@ -29,7 +29,7 @@ public class Clientes {
     public boolean modificar(Cliente cliente, String nombre, String telefono) throws OperationNotSupportedException {
         boolean modificado = false;
         Objects.requireNonNull(cliente, "No se puede modificar un cliente nulo.");
-        if (!coleccionCLiente.contains(cliente)){
+        if (!coleccionCliente.contains(cliente)){
             throw new OperationNotSupportedException("No existe ningún cliente con ese DNI.");
         }
         if (nombre != null && !nombre.isBlank()){
@@ -45,13 +45,14 @@ public class Clientes {
 
     public Cliente buscar(Cliente cliente) {
         Objects.requireNonNull(cliente, "No se puede buscar un cliente nulo.");
-        return (coleccionCLiente.contains(cliente)) ? cliente : null;
+        int indice = coleccionCliente.indexOf(cliente);
+        return (indice == -1) ? null : coleccionCliente.get(indice);
     }
 
     public void borrar(Cliente cliente) throws OperationNotSupportedException {
         Objects.requireNonNull(cliente, "No se puede borrar un cliente nulo.");
-        if (coleccionCLiente.contains(cliente)){
-            coleccionCLiente.remove(cliente);
+        if (coleccionCliente.contains(cliente)){
+            coleccionCliente.remove(cliente);
         } else {
             throw new OperationNotSupportedException("No existe ningún cliente con ese DNI.");
         }
