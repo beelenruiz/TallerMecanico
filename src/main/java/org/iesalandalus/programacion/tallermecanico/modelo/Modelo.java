@@ -18,7 +18,7 @@ public class Modelo {
     Vehiculos vehiculos;
     Revisiones revisiones;
     public Modelo(){
-
+        comenzar();
     }
     public void comenzar(){
         clientes = new Clientes();
@@ -30,25 +30,29 @@ public class Modelo {
     }
 
     public void insertar(Cliente cliente) throws OperationNotSupportedException {
+        Objects.requireNonNull(cliente, "No se puede insertar un cliente nulo.");
         clientes.insertar(new Cliente(cliente));
     }
     public void insertar(Vehiculo vehiculo) throws OperationNotSupportedException {
         vehiculos.insertar(vehiculo);
     }
     public void insertar(Revision revision) throws OperationNotSupportedException {
-        clientes.buscar(revision.getCliente());
-        vehiculos.buscar(revision.getVehiculo());
-        revisiones.insertar(new Revision(revision));
+        Cliente cliente = clientes.buscar(revision.getCliente());
+        Vehiculo vehiculo = vehiculos.buscar(revision.getVehiculo());
+        revisiones.insertar(new Revision(cliente, vehiculo, revision.getFechaInicio()));
     }
 
     public Cliente buscar(Cliente cliente){
-        return (clientes.buscar(cliente) == cliente) ? new Cliente(cliente) : null;
+        cliente = Objects.requireNonNull(clientes.buscar(cliente), "No existe un cliente igual");
+        return new Cliente(cliente);
     }
     public Vehiculo buscar(Vehiculo vehiculo){
-        return (vehiculos.buscar(vehiculo) == vehiculo) ? new Vehiculo(vehiculo.marca(), vehiculo.modelo(), vehiculo.matricula()) : null;
+        vehiculo = Objects.requireNonNull(vehiculos.buscar(vehiculo), "No existe un vehículo igual");
+        return vehiculo;
     }
     public Revision buscar(Revision revision){
-        return (revisiones.buscar(revision) == revision) ? new Revision(revision) : null;
+        revision = Objects.requireNonNull(revisiones.buscar(revision), "No existe una revisión igual");
+        return new Revision(revision);
     }
 
     public boolean modificar(Cliente cliente, String nombre, String telefono) throws OperationNotSupportedException {
@@ -89,13 +93,10 @@ public class Modelo {
         for (Cliente cliente : clientes.get()) {
             listaTemporal.add(new Cliente(cliente));
         }
-
         return listaTemporal;
     }
     public List<Vehiculo> getVehiculos(){
-        List<Vehiculo> listaTemporal = vehiculos.get();
-        List<Vehiculo> vehiculosCopia = new ArrayList<>(listaTemporal);
-        return vehiculosCopia;
+        return vehiculos.get();
     }
     public List<Revision> getRevisiones(){
         List<Revision> listaTemporal = new ArrayList<>();

@@ -9,9 +9,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class Revision {
-    private static final float PRECIO_HORA = 30.0f;
-    private static final float PRECIO_DIA = 10.0f;
-    public static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private static final float PRECIO_HORA = 30f;
+    private static final float PRECIO_DIA = 10f;
+    private static final float PRECIO_MATERIAL = 1.5f;
+    public static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
     private Cliente cliente;
@@ -26,12 +27,12 @@ public class Revision {
     }
     public Revision(Revision revision){
         Objects.requireNonNull(revision, "La revisión no puede ser nula.");
-        this.cliente = new Cliente(revision.getCliente());
-        this.vehiculo = revision.getVehiculo();
-        this.fechaInicio = revision.getFechaInicio();
-        this.fechaFin = revision.getFechaFin();
-        this.horas = revision.getHoras();
-        this.precioMaterial = revision.getPrecioMaterial();
+        cliente = new Cliente(revision.cliente);
+        vehiculo = revision.vehiculo;
+        fechaInicio = revision.fechaInicio;
+        fechaFin = revision.fechaFin;
+        horas = revision.horas;
+        precioMaterial = revision.precioMaterial;
     }
 
     private void setCliente(Cliente cliente) {
@@ -122,8 +123,8 @@ public class Revision {
         float precioHoras  = PRECIO_HORA * getHoras();
         float precioDias = PRECIO_DIA * getDias();
         float precioFijo = precioDias + precioHoras;
-        float precioMaterial = getPrecioMaterial() * 1.5f;
-        return precioFijo + precioMaterial;
+        float precioEspecifico = precioMaterial * PRECIO_MATERIAL;
+        return precioFijo + precioEspecifico;
     }
 
     @Override
@@ -144,9 +145,9 @@ public class Revision {
         String cadena;
         String fechaF = (this.fechaFin != null) ? this.fechaFin.format(FORMATO_FECHA) : "";
         if (!estaCerrada()){
-            cadena = String.format("%s - %s: (%s - %s), %s horas, %.2f € en material", this.cliente, this.vehiculo, this.fechaInicio, fechaF, this.horas, this.precioMaterial);
+            cadena = String.format("%s - %s: (%s - %s), %s horas, %.2f € en material", this.cliente, this.vehiculo, this.fechaInicio.format(FORMATO_FECHA), fechaF, this.horas, this.precioMaterial);
         } else {
-            cadena = String.format("%s - %s: (%s - %s), %s horas, %.2f € en material, %.2f € total", this.cliente, this.vehiculo, this.fechaInicio, fechaF, this.horas, this.precioMaterial, getPrecio());
+            cadena = String.format("%s - %s: (%s - %s), %s horas, %.2f € en material, %.2f € total", this.cliente, this.vehiculo, this.fechaInicio.format(FORMATO_FECHA), fechaF, this.horas, this.precioMaterial, getPrecio());
         }
         return cadena;
     }

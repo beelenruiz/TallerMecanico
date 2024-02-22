@@ -3,7 +3,7 @@ package org.iesalandalus.programacion.tallermecanico.modelo.dominio;
 import java.util.Objects;
 
 public record Vehiculo(String marca, String modelo, String matricula) {
-    private static final String ER_MARCA = "[A-Z]+[a-z]*([ -]?[A-Z][a-z]+)*";
+    private static final String ER_MARCA = "[A-Z][a-z]+(?:[ -]?[A-Z][a-z]+)?|[A-Z]+";
     private static final String ER_MATRICULA = "\\d{4}[^AEIOU]{3}";
 
     public Vehiculo{
@@ -43,7 +43,7 @@ public record Vehiculo(String marca, String modelo, String matricula) {
         }
     }
 
-    public static Vehiculo get(String matricula){
+    public static Vehiculo get(String matricula){ //método de fabrica estático
         return new Vehiculo("Renault", "Megane", matricula);
     }
 
@@ -52,12 +52,12 @@ public record Vehiculo(String marca, String modelo, String matricula) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Vehiculo vehiculo = (Vehiculo) o;
-        return Objects.equals(marca, vehiculo.marca) && Objects.equals(modelo, vehiculo.modelo) && Objects.equals(matricula, vehiculo.matricula);
+        return Objects.equals(matricula, vehiculo.matricula);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(marca, modelo, matricula);
+        return Objects.hash(matricula);
     }
 
     @Override

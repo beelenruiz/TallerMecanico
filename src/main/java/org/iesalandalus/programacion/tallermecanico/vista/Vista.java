@@ -7,7 +7,6 @@ import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Vehiculo;
 
 import javax.naming.OperationNotSupportedException;
 import java.time.LocalDate;
-import java.util.Objects;
 
 public class Vista {
     private Controlador controlador;

@@ -5,7 +5,8 @@ import java.util.Objects;
 import static java.lang.Integer.parseInt;
 
 public class Cliente {
-    private static final String ER_NOMBRE = "[A-ZÁÉÍÓÚ][a-záéíóú]+( [A-ZÁÉÍÓÚ][a-záéíóú]+)*";
+    private static final String ER_NOMBRE = "[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+(?: [A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)*+";
+    //el + es solo por el sonarlint
     private static final String ER_DNI = "\\d{8}[A-Za-z]";
     private static final String ER_TELEFONO = "\\d{9}";
     String nombre;
@@ -17,7 +18,7 @@ public class Cliente {
         setDni(dni);
         setTelefono(telefono);
     }
-    public Cliente(Cliente cliente){
+    public Cliente(Cliente cliente){ //constructor copia
         Objects.requireNonNull(cliente, "No es posible copiar un cliente nulo.");
         nombre = cliente.nombre;
         dni = cliente.dni;
@@ -45,10 +46,10 @@ public class Cliente {
         this.dni = dni;
     }
     private boolean comprobarLetraDni(String dni){
-        String letras_dni = new String("TRWAGMYFPDXBNJZSQVHLCKE");
+        String letrasDni = "TRWAGMYFPDXBNJZSQVHLCKE";
         int numerosDni = parseInt(dni.substring(0, 8));
         int resto = numerosDni % 23;
-        return letras_dni.charAt(resto) == Character.toUpperCase(dni.charAt(8));
+        return letrasDni.charAt(resto) == Character.toUpperCase(dni.charAt(8));
     }
     public String getDni() {
         return dni;
@@ -65,7 +66,7 @@ public class Cliente {
         return telefono;
     }
 
-    public static Cliente get(String dni){
+    public static Cliente get(String dni){ //método de fabrica estático
         return new Cliente("Patricio Estrella", dni, "950111111");
     }
 
@@ -74,12 +75,12 @@ public class Cliente {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Cliente cliente = (Cliente) o;
-        return Objects.equals(nombre, cliente.nombre) && Objects.equals(dni, cliente.dni) && Objects.equals(telefono, cliente.telefono);
+        return Objects.equals(dni, cliente.dni);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nombre, dni, telefono);
+        return Objects.hash(dni);
     }
 
     @Override

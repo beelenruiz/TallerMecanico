@@ -68,27 +68,26 @@ public class Revisiones {
         }
     }
 
-    public void anadirHoras(Revision revision, int horas) throws OperationNotSupportedException {
+    private Revision getRevisiones(Revision revision) throws OperationNotSupportedException {
         Objects.requireNonNull(revision, "No puedo operar sobre una revisión nula.");
-        if (!coleccionRevision.contains(revision)){
+        Revision revisionEncontrada = buscar(revision);
+        if (revisionEncontrada == null){
             throw new OperationNotSupportedException("No existe ninguna revisión igual.");
         }
-        revision.anadirHoras(horas);
+        return revisionEncontrada;
+    }
+    public void anadirHoras(Revision revision, int horas) throws OperationNotSupportedException {
+        Revision revisionEncontrada = getRevisiones(revision);
+        revisionEncontrada.anadirHoras(horas);
     }
     public void anadirPrecioMaterial(Revision revision, float precioMaterial) throws OperationNotSupportedException {
-        Objects.requireNonNull(revision, "No puedo operar sobre una revisión nula.");
-        if (!coleccionRevision.contains(revision)){
-            throw new OperationNotSupportedException("No existe ninguna revisión igual.");
-        }
-        revision.anadirPrecioMaterial(precioMaterial);
+        Revision revisionEncontrada = getRevisiones(revision);
+        revisionEncontrada.anadirPrecioMaterial(precioMaterial);
     }
 
     public void cerrar(Revision revision, LocalDate fechaRevision) throws OperationNotSupportedException {
-        Objects.requireNonNull(revision, "No puedo operar sobre una revisión nula.");
-        if (!coleccionRevision.contains(revision)){
-            throw new OperationNotSupportedException("No existe ninguna revisión igual.");
-        }
-        revision.cerrar(fechaRevision);
+        Revision revisionEncontrada = getRevisiones(revision);
+        revisionEncontrada.cerrar(fechaRevision);
     }
 
     public Revision buscar(Revision revision) {

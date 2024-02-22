@@ -91,18 +91,18 @@ public class Controlador {
     }
 
     public List<Revision> getRevisiones(){
-        List<Revision> revisions = modelo.getRevisiones();
-        System.out.println(revisions);
-        return  revisions;
+        List<Revision> revisiones = modelo.getRevisiones();
+        System.out.println(revisiones);
+        return  revisiones;
     }
     public List<Revision> getRevisiones(Cliente cliente){
-        List<Revision> revisions = modelo.getRevisiones(cliente);
-        System.out.println("Lista de revisiones para el cliente"+ cliente + "es"+ revisions);
-        return  revisions;
+        List<Revision> revisiones = modelo.getRevisiones(cliente);
+        System.out.println("Lista de revisiones para el cliente"+ cliente + "es"+ revisiones);
+        return  revisiones;
     }
     public List<Revision> getRevisiones(Vehiculo vehiculo){
-        List<Revision> revisions = modelo.getRevisiones(vehiculo);
-        System.out.println("Lista de revisiones para el vehiculo"+ vehiculo + "es"+ revisions);
-        return  revisions;
+        List<Revision> revisiones = modelo.getRevisiones(vehiculo);
+        System.out.println("Lista de revisiones para el vehiculo"+ vehiculo + "es"+ revisiones);
+        return  revisiones;
     }
 }
