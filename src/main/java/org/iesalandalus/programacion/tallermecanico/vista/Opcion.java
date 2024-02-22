@@ -12,7 +12,7 @@ public enum Opcion{
     INSERTAR_VEHICULO(6, "Insertar un vehículo"),
     BUSCAR_VEHICULO(7, "Busar un vehículo"),
     BORRAR_VEHICULO(8, "Borrar un vehículo"),
-    LISTAR_VEHICUOS(9, "Listar todos los vehículos"),
+    LISTAR_VEHICULOS(9, "Listar todos los vehículos"),
     INSERTAR_REVISION(10, "Insertar una revisión"),
     BUSCAR_REVISION(11, "Buscar una revisión"),
     BORRAR_REVISION(12, "Borrar una revvisión"),
