@@ -33,7 +33,10 @@ public class GestorEventos {
         }
     }
 
-    public void notificar(Evento... evento){
-
+    public void notificar(Evento evento){
+        Objects.requireNonNull(evento, "El evento no puede ser nulo.");
+        for(ReceptorEventos receptorEventos: receptores.get(evento)){
+        receptorEventos.actualizar(evento);
+        }
     }
 }

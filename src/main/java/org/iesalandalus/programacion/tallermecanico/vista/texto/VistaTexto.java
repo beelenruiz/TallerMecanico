@@ -13,7 +13,7 @@ public class VistaTexto {
     private Controlador controlador;
     Consola consola;
     public GestorEventos getGestorEventos(){
-        
+        return new GestorEventos();
     }
 
     public  void comenzar() throws OperationNotSupportedException {
@@ -32,7 +32,7 @@ public class VistaTexto {
 
     private void ejecutar(Evento evento) throws OperationNotSupportedException {
         consola.mostrarCabecera("---- TALLER MECÁNICO ----");
-        gestorEventos.notificar();
+        gestorEventos.notificar(evento);
     }
 
 
@@ -68,13 +68,8 @@ public class VistaTexto {
         return new Mecanico(leerCliente(), leerVehiculo(), consola.leerFecha("Introduce la fecha de inicio: "));
     }
     public Trabajo leerTrabajoVehiculo(){
-        Vehiculo vehiculo = leerVehiculo();
-        Trabajo trabajo = null;
-        if (vehiculo instanceof Mecanico mecanico){
-            trabajo = leerMecanico();
-        } else if (vehiculo instanceof Revision revision) {
-            trabajo = leerRevision();
-        }
+        Trabajo trabajo = Trabajo.get(leerVehiculoMatricula());
+
         return trabajo;
     }
 

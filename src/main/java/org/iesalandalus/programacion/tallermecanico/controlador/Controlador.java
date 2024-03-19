@@ -4,6 +4,7 @@ import org.iesalandalus.programacion.tallermecanico.modelo.Modelo;
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Cliente;
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Revision;
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Vehiculo;
+import org.iesalandalus.programacion.tallermecanico.vista.Vista;
 import org.iesalandalus.programacion.tallermecanico.vista.eventos.Evento;
 import org.iesalandalus.programacion.tallermecanico.vista.texto.Consola;
 import org.iesalandalus.programacion.tallermecanico.vista.texto.VistaTexto;
@@ -22,7 +23,6 @@ public class Controlador implements IControlador {
         Objects.requireNonNull(vista, "La vista es nulo");
         this.modelo = modelo;
         this.vista = vista;
-        vista.setControlador(this);
     }
 
     @Override
@@ -38,27 +38,28 @@ public class Controlador implements IControlador {
     }
 
     @Override
-    public void actualizar(Evento evento) {
+    public void actualizar(Evento evento) throws OperationNotSupportedException {
         switch (evento){
-            case BORRAR_CLIENTE -> modelo.borrar(vista.);
-            case SALIR -> salir();
-            case BUSCAR_CLIENTE -> buscarCliente();
-            case BORRAR_REVISION -> borrarRevision();
-            case BORRAR_VEHICULO -> borrarVehiculo();
-            case BUSCAR_REVISION -> buscarRevision();
-            case BUSCAR_VEHICULO -> buscarVehiculo();
-            case CERRAR_REVISION -> cerrarRevision();
-            case LISTAR_CLIENTES -> listarClientes();
-            case INSERTAR_CLIENTE -> insertarCliente();
-            case LISTAR_VEHICULOS -> listarVehiculo();
-            case INSERTAR_REVISION -> insertarRevision();
-            case INSERTAR_VEHICULO -> insertarVehiculo();
-            case LISTAR_REVISIONES -> listarRevision();
-            case MODIFICAR_CLIENTE -> modificarCliente();
-            case ANADIR_HORAS_REVISION -> anadirHoras();
-            case LISTAR_REVISIONES_CLIENTE -> listarRevisionesCliente();
-            case LISTAR_REVISIONES_VEHICULO -> listarRevisionesVehiculo();
-            case ANADIR_PRECIO_MATERIAL_REVISION -> anadirPrecioMaterial();
+            case BORRAR_CLIENTE -> modelo.borrar(vista.leerCliente());
+            case SALIR -> terminar();
+            case BUSCAR_CLIENTE -> modelo.buscar(vista.leerCliente());
+            case BORRAR_TRABAJO -> modelo.borrar(vista.leerMecanico());
+            case BORRAR_VEHICULO -> modelo.borrar(vista.leerVehiculo());
+            case BUSCAR_TRABAJO -> modelo.buscar(vista.leerTrabajoVehiculo());
+            case BUSCAR_VEHICULO -> modelo.buscar(vista.leerVehiculo());
+            case CERRAR_TRABAJO -> modelo.cerrar(vista.leerTrabajoVehiculo(), vista.leerFechaCierre());
+            case LISTAR_CLIENTES -> modelo.getClientes();
+            case INSERTAR_CLIENTE -> modelo.insertar(vista.leerCliente());
+            case LISTAR_VEHICULOS -> modelo.getVehiculos();
+            case INSERTAR_REVISION -> modelo.insertar(vista.leerRevision());
+            case INSERTAR_MECANICO -> modelo.insertar(vista.leerMecanico());
+            case INSERTAR_VEHICULO -> modelo.insertar(vista.leerVehiculo());
+            case LISTAR_TRABAJOS -> modelo.getTrabajos();
+            case MODIFICAR_CLIENTE -> modelo.modificar(vista.leerClienteDni(), vista.leerNuevoNombre(), vista.leerNuevoTelefono());
+            case ANADIR_HORAS_TRABAJO -> modelo.anadirHoras(vista.leerTrabajoVehiculo(), vista.leerHoras());
+            case LISTAR_TRABAJOS_CLIENTE -> modelo.getTrabajos(vista.leerCliente());
+            case LISTAR_TRABAJOS_VEHICULO -> modelo.getTrabajos(vista.leerVehiculo());
+            case ANADIR_PRECIO_MATERIAL_TRABAJO -> modelo.anadirPrecioMaterial(vista.leerTrabajoVehiculo(), vista.leerPrecioMaterial());
         }
     }
 }

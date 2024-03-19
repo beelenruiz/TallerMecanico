@@ -9,5 +9,5 @@ public interface IControlador {
 
     void terminar();
 
-    void actualizar(Evento evento);
+    void actualizar(Evento evento) throws OperationNotSupportedException;
 }
