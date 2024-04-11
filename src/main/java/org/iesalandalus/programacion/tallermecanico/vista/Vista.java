@@ -13,7 +13,7 @@ import java.util.List;
 public interface Vista {
     GestorEventos getGestorEventos();
 
-    void comenzar() throws OperationNotSupportedException;
+    void comenzar();
 
     void terminar();
 

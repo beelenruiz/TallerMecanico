@@ -1,5 +1,6 @@
 package org.iesalandalus.programacion.tallermecanico.vista.eventos;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -25,12 +26,12 @@ public enum Evento {
     CERRAR_TRABAJO(19, "Cerrar un trabajo"),
     SALIR(20, "Salir");
 
-    private int codigo;
-    private String texto;
-    private static Map<Integer, Evento> eventos = new TreeMap<>();
+    private final int codigo;
+    private final String texto;
+    private static Map<Integer, Evento> eventos = new HashMap<>();
     static {
-        for (Evento evento : Evento.values()) {
-            eventos.put(evento.codigo, Evento.valueOf(evento.texto));
+        for (Evento evento : values()) {
+            eventos.put(evento.codigo, evento);
         }
     }
 
@@ -41,18 +42,15 @@ public enum Evento {
     public static boolean esValido(int codigo){
         return eventos.containsKey(codigo);
     }
-    public static Evento get(int codigo){
-        Evento evento;
-        if (esValido(codigo)) {
-            evento = Evento.valueOf(String.valueOf(eventos.get(codigo)));
-        } else {
-            throw new IllegalArgumentException("Evento no válido");
+    public static Evento get(int codigo) {
+        if (!esValido(codigo)) {
+            throw new IllegalArgumentException("Opción inválida");
         }
-        return evento;
+        return eventos.get(codigo);
     }
 
     @Override
     public String toString() {
-        return String.format("%s. %s]", this.codigo, this.texto);
+        return String.format("%s. %s", this.codigo, this.texto);
     }
 }

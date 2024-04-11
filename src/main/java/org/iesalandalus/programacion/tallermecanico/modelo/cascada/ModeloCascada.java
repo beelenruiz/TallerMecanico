@@ -21,15 +21,15 @@ public class ModeloCascada implements org.iesalandalus.programacion.tallermecani
     ITrabajos trabajos;
     private FabricaFuenteDatos fabricaFuenteDatos;
 
-    public void ModeloCascada(FabricaFuenteDatos fabricaFuenteDatos){
+    public ModeloCascada(FabricaFuenteDatos fabricaFuenteDatos){
         this.fabricaFuenteDatos = fabricaFuenteDatos;
     }
 
     @Override
     public void comenzar() {
-        clientes = new Clientes();
-        vehiculos = new Vehiculos();
-        trabajos = new Trabajos();
+        clientes = fabricaFuenteDatos.crear().crearClientes();
+        vehiculos = fabricaFuenteDatos.crear().crearVehiculos();
+        trabajos = fabricaFuenteDatos.crear().crearTrabajos();
     }
     @Override
     public void terminar() {
