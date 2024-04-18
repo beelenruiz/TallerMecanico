@@ -1,18 +1,113 @@
-package org.iesalandalus.programacion.tallermecanico.modelo.negocio.memoria;
+package org.iesalandalus.programacion.tallermecanico.modelo.negocio.ficheros;
 
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.*;
+import org.iesalandalus.programacion.tallermecanico.modelo.negocio.IFuenteDatos;
 import org.iesalandalus.programacion.tallermecanico.modelo.negocio.ITrabajos;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import javax.naming.OperationNotSupportedException;
+import javax.xml.parsers.DocumentBuilder;
+import java.io.File;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 public class Trabajos implements ITrabajos {
+    private static final String FICHERO_TRABAJOS = "trabajos.xml";
+    private static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static final String RAIZ = "datos";
+    private static final String TRABAJO = "trabajo";
+    private static final String CLIENTE = "cliente";
+    private static final String VEHICULO = "vehiculo";
+    private static final String FECHA_INICIO = "fechaInicio";
+    private static final String FECHA_FIN = "fechaFin";
+    private static final String HORAS = "horas";
+    private static final String PRECIO_MATERIAL = "precioMaterial";
+    private static final String TIPO = "tipo";
+    private static final String REVISION = "revision";
+    private static final String MECANICO = "mecanico";
+
+    private static Trabajos instancia;
+
     List<Trabajo> coleccionTrabajo;
-    public Trabajos(){
+    private Trabajos(){
         coleccionTrabajo = new ArrayList<>();
+    }
+
+    static Trabajos getInstancia(){
+        if(instancia == null){
+            instancia = new Trabajos();
+        }
+        return  instancia;
+    }
+
+    public void Comenzar(){
+        procesarDocumentoXml(UtilidadesXml.leerDocumentoXml(String.format("%s%s%s", RAIZ, File.separator, FICHERO_TRABAJOS)));
+    }
+    private void procesarDocumentoXml(Document documentoXml) {
+        NodeList trabajos = documentoXml.getElementsByTagName("trabajos");
+        for(int i=0; i < trabajos.getLength(); i++){
+            Node trabajo = trabajos.item(i);
+            if(trabajo.getNodeType() == Node.ELEMENT_NODE){
+                coleccionTrabajo.add(getTrabajo((Element) trabajo));
+            }
+        }
+    }
+    private Trabajo getTrabajo(Element elemento){
+        Objects.requireNonNull(elemento, "El elemento no puede ser nulo.");
+        Trabajo trabajo = null;
+        Cliente cliente = Cliente.get(elemento.getAttribute(CLIENTE));
+        Vehiculo vehiculo = Vehiculo.get(elemento.getAttribute(VEHICULO));
+        LocalDate fechaInicio = LocalDate.parse(elemento.getAttribute(FECHA_INICIO), FORMATO_FECHA);
+        if (elemento.hasAttribute(FECHA_FIN)) {
+            LocalDate fechaFin = LocalDate.parse(elemento.getAttribute(FECHA_FIN), FORMATO_FECHA);
+        }
+        if (elemento.hasAttribute(HORAS)){
+            float horas = Float.parseFloat(elemento.getAttribute(HORAS));
+        }
+        if (elemento.getAttribute(TIPO).equals(MECANICO)){
+            float precioMaterial = Float.parseFloat(elemento.getAttribute(PRECIO_MATERIAL));
+            trabajo = new Mecanico(cliente, vehiculo, fechaInicio);
+        } else {
+            trabajo = new Revision(cliente, vehiculo, fechaInicio);
+        }
+        return trabajo;
+    }
+
+    public void terminar(){
+        UtilidadesXml.escribirDocumentoXml(crearDocumentoXml(),String.format("%s%s%s", RAIZ, File.separator, FICHERO_TRABAJOS));
+    }
+    private Document crearDocumentoXml() {
+        DocumentBuilder constructor = UtilidadesXml.crearConstructorDocumentoXml();
+        Document documentoXml = null;
+        if (constructor != null) {
+            documentoXml = constructor.newDocument();
+            documentoXml.appendChild(documentoXml.createElement("trabajos"));
+            for(Trabajo trabajo: coleccionTrabajo){
+                Element elementoTrabajo = getElemento(documentoXml, trabajo);
+                documentoXml.getDocumentElement().appendChild(elementoTrabajo);
+            }
+        }
+        return documentoXml;
+    }
+    private Element getElemento(Document documentoXml, Trabajo trabajo){
+        Objects.requireNonNull(documentoXml, "El documento no puede ser nulo.");
+        Objects.requireNonNull(trabajo, "El trabajo  no puede ser nulo.");
+        Element elementoTrabajo = documentoXml.createElement(TRABAJO);
+        elementoTrabajo.setAttribute(CLIENTE, String.valueOf(trabajo.getCliente()));
+        elementoTrabajo.setAttribute(VEHICULO, String.valueOf(trabajo.getVehiculo()));
+        elementoTrabajo.setAttribute(FECHA_INICIO, String.valueOf(trabajo.getFechaInicio()));
+        if (trabajo.estaCerrado()){
+            elementoTrabajo.setAttribute(FECHA_FIN, String.valueOf(trabajo.getFechaFin()));
+        }
+        elementoTrabajo.setAttribute(HORAS, String.valueOf(trabajo.getHoras()));
+        if (trabajo instanceof Mecanico){
+            elementoTrabajo.setAttribute(PRECIO_MATERIAL, String.valueOf(((Mecanico)trabajo).getPrecioMaterial()));
+        }
+        return elementoTrabajo;
     }
 
     @Override
@@ -39,6 +134,8 @@ public class Trabajos implements ITrabajos {
         }
         return trabajosVehiculo;
     }
+
+
 
     @Override
     public void insertar(Trabajo trabajo) throws OperationNotSupportedException {
@@ -130,4 +227,6 @@ public class Trabajos implements ITrabajos {
         }
         coleccionTrabajo.remove(trabajo);
     }
+
+
 }

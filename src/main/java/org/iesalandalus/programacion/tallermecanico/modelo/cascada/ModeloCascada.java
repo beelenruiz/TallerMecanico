@@ -5,9 +5,6 @@ import org.iesalandalus.programacion.tallermecanico.modelo.negocio.FabricaFuente
 import org.iesalandalus.programacion.tallermecanico.modelo.negocio.IClientes;
 import org.iesalandalus.programacion.tallermecanico.modelo.negocio.ITrabajos;
 import org.iesalandalus.programacion.tallermecanico.modelo.negocio.IVehiculos;
-import org.iesalandalus.programacion.tallermecanico.modelo.negocio.memoria.Clientes;
-import org.iesalandalus.programacion.tallermecanico.modelo.negocio.memoria.Trabajos;
-import org.iesalandalus.programacion.tallermecanico.modelo.negocio.memoria.Vehiculos;
 
 import javax.naming.OperationNotSupportedException;
 import java.time.LocalDate;
