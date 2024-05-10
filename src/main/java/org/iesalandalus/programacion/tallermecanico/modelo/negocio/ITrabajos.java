@@ -18,6 +18,9 @@ public interface ITrabajos {
     List<Trabajo> get(Vehiculo vehiculo);
 
 
+    Map<TipoTrabajo, Integer> getEstadisticasMensuales(LocalDate mes);
+
+    Map<TipoTrabajo, Integer> inicializarEstadisticas();
 
     void insertar(Trabajo trabajo) throws OperationNotSupportedException;
 
