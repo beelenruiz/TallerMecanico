@@ -1,14 +1,13 @@
 package org.iesalandalus.programacion.tallermecanico.vista.texto;
 
-import org.iesalandalus.programacion.tallermecanico.controlador.Controlador;
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.*;
 import org.iesalandalus.programacion.tallermecanico.vista.Vista;
 import org.iesalandalus.programacion.tallermecanico.vista.eventos.Evento;
 import org.iesalandalus.programacion.tallermecanico.vista.eventos.GestorEventos;
 
-import javax.naming.OperationNotSupportedException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 public class VistaTexto implements Vista {
     private final GestorEventos gestorEventos = new GestorEventos(Evento.values());
@@ -100,6 +99,9 @@ public class VistaTexto implements Vista {
     }
 
     @Override
+    public LocalDate leerMes() { return Consola.leerFecha("Introduce la fecha correspondiente al mes que quieres visualizar"); }
+
+    @Override
     public void notificarResultado(Evento evento, String texto, boolean exito) {
         if (exito) {
             System.out.println(texto);
@@ -142,5 +144,10 @@ public class VistaTexto implements Vista {
         for (Trabajo trabajo : trabajos) {
             System.out.println(trabajo);
         }
+    }
+
+    @Override
+    public void mostrarEstadisticasMensuales(Map<TipoTrabajo, Integer> estadisticas) {
+        System.out.printf("Tipos de trabajos realizados este mes: %s%n", estadisticas);
     }
 }

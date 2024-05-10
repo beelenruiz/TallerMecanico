@@ -65,6 +65,7 @@ public class Controlador implements IControlador {
                 case LISTAR_TRABAJOS_VEHICULO -> vista.mostrarTrabajos(modelo.getTrabajos(vista.leerVehiculoMatricula()));
                 case ANADIR_PRECIO_MATERIAL_TRABAJO -> {modelo.anadirPrecioMaterial(vista.leerTrabajoVehiculo(), vista.leerPrecioMaterial());
                     resultado = "Precio del material añadido correctamente";}
+                case MOSTRAR_ESTADISTICAS_MENSUALES -> vista.mostrarEstadisticasMensuales(modelo.getEstadisticasMensuales(vista.leerMes()));
             }
             if (!resultado.isBlank()){
                 vista.notificarResultado(evento, resultado, true);
