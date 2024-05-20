@@ -18,14 +18,16 @@ public abstract class Trabajo {
         setCliente(cliente);
         setVehiculo(vehiculo);
         setFechaInicio(fechaInicio);
+        fechaFin = null;
+        horas = 0;
     }
     protected Trabajo(Trabajo trabajo){
         Objects.requireNonNull(trabajo, "El trabajo no puede ser nulo.");
-        this.cliente = new Cliente(trabajo.getCliente());
-        this.vehiculo = trabajo.getVehiculo();
-        this.fechaInicio = trabajo.getFechaInicio();
-        this.fechaFin = trabajo.getFechaFin();
-        this.horas = trabajo.getHoras();
+        cliente = new Cliente(trabajo.cliente);
+        vehiculo = trabajo.vehiculo;
+        fechaInicio = trabajo.fechaInicio;
+        fechaFin = trabajo.fechaFin;
+        horas = trabajo.horas;
     }
 
     public static Trabajo copiar(Trabajo trabajo){
@@ -39,7 +41,8 @@ public abstract class Trabajo {
     }
 
     public static Trabajo get(Vehiculo vehiculo){
-        return new Mecanico(new Cliente("Belen Ruiz", "77653531H", "123456789"),vehiculo, LocalDate.now()){};
+        Objects.requireNonNull(vehiculo, "El vehículo no puede ser nulo.");
+        return new Revision(Cliente.get("11111111H"), vehiculo, LocalDate.now());
     }
 
     protected void setCliente(Cliente cliente) {

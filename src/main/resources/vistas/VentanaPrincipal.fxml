@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="BOTTOM_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="412.0" prefWidth="600.0" spacing="10.0" style="-fx-background-color: #d1a6da;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.iesalandalus.programacion.tallermecanico.vista.grafica.controladores.VentanaPrincipal">
+   <children>
+      <MenuBar prefHeight="7.0" prefWidth="600.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <Label alignment="CENTER" prefHeight="44.0" prefWidth="578.0" style="-fx-background-color: #ffffff; -fx-border-radius: 20;" text="TALLER MECANICO" textFill="#a019b2">
+         <font>
+            <Font name="System Bold" size="41.0" />
+         </font>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </Label>
+      <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="308.0" prefWidth="600.0" spacing="20.0" style="-fx-background-color: #d1a6da;">
+         <children>
+            <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="279.0" prefWidth="175.0" spacing="20.0" style="-fx-border-color: #ffffff; -fx-border-radius: 20; -fx-border-width: 5;">
+               <children>
+                  <Label alignment="CENTER" prefHeight="55.0" prefWidth="136.0" text="CLIENTE" textFill="#a019b2">
+                     <font>
+                        <Font name="System Bold" size="27.0" />
+                     </font>
+                  </Label>
+                  <Button mnemonicParsing="false" onAction="#insertarCliente" prefHeight="38.0" prefWidth="115.0" style="-fx-background-color: #a019b2;" text="INSERTAR" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#buscarCliente" prefHeight="40.0" prefWidth="114.0" style="-fx-background-color: #a019b2;" text="BUSCAR" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#listarClientes" prefHeight="38.0" prefWidth="115.0" style="-fx-background-color: #a019b2;" text="LISTAR" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Button>
+               </children>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <padding>
+                  <Insets bottom="15.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </VBox>
+            <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="279.0" prefWidth="175.0" spacing="20.0" style="-fx-border-color: #ffffff; -fx-border-radius: 20; -fx-border-width: 5;">
+               <children>
+                  <Label alignment="CENTER" prefHeight="55.0" prefWidth="153.0" text="VEHICULOS" textFill="#a019b2">
+                     <font>
+                        <Font name="System Bold" size="26.0" />
+                     </font>
+                  </Label>
+                  <Button mnemonicParsing="false" onAction="#insertarVehiculo" prefHeight="38.0" prefWidth="115.0" style="-fx-background-color: #a019b2;" text="INSERTAR" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#buscarVehiculo" prefHeight="40.0" prefWidth="114.0" style="-fx-background-color: #a019b2;" text="BUSCAR" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#listarVehiculos" prefHeight="38.0" prefWidth="115.0" style="-fx-background-color: #a019b2;" text="LISTAR" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets bottom="15.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </VBox>
+            <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="279.0" prefWidth="175.0" spacing="20.0" style="-fx-border-color: #ffffff; -fx-border-radius: 20; -fx-border-width: 5;">
+               <children>
+                  <Label alignment="CENTER" prefHeight="55.0" prefWidth="136.0" text="TRABAJOS" textFill="#a019b2">
+                     <font>
+                        <Font name="System Bold" size="26.0" />
+                     </font>
+                  </Label>
+                  <Button mnemonicParsing="false" onAction="#insertarTrabajo" prefHeight="38.0" prefWidth="115.0" style="-fx-background-color: #a019b2;" text="INSERTAR" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#buscarTrabajo" prefHeight="40.0" prefWidth="114.0" style="-fx-background-color: #a019b2;" text="BUSCAR" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#listarTrabajos" prefHeight="38.0" prefWidth="115.0" style="-fx-background-color: #a019b2;" text="LISTAR" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets bottom="15.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</VBox>

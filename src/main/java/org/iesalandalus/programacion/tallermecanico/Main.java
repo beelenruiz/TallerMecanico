@@ -7,10 +7,13 @@ import org.iesalandalus.programacion.tallermecanico.modelo.negocio.FabricaFuente
 import org.iesalandalus.programacion.tallermecanico.vista.FabricaVista;
 import org.iesalandalus.programacion.tallermecanico.vista.Vista;
 
-public class Main {
-    public static void main(String[] args){
-        Modelo modelo = FabricaModelo.CASCADA.crear(FabricaFuenteDatos.FICHEROS);
-        Vista vista = FabricaVista.TEXTO.crear();
+import javax.naming.OperationNotSupportedException;
+
+public class  Main {
+    public static void main(String[] args) throws OperationNotSupportedException {
+        Modelo modelo = FabricaModelo.FICHEROS.crear(FabricaFuenteDatos.MEMORIA);
+
+        Vista vista = FabricaVista.GRAFICA.crear();
 
         Controlador controlador = new Controlador(modelo, vista);
         controlador.comenzar();

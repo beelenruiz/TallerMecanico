@@ -1,8 +1,14 @@
 package org.iesalandalus.programacion.tallermecanico.controlador;
 
+import org.iesalandalus.programacion.tallermecanico.modelo.FabricaModelo;
 import org.iesalandalus.programacion.tallermecanico.modelo.Modelo;
+import org.iesalandalus.programacion.tallermecanico.modelo.negocio.FabricaFuenteDatos;
+import org.iesalandalus.programacion.tallermecanico.modelo.negocio.IFuenteDatos;
+import org.iesalandalus.programacion.tallermecanico.vista.FabricaVista;
 import org.iesalandalus.programacion.tallermecanico.vista.Vista;
 import org.iesalandalus.programacion.tallermecanico.vista.eventos.Evento;
+import org.iesalandalus.programacion.tallermecanico.vista.grafica.LanzadorVentanaPrincipal;
+
 import java.util.Objects;
 
 public class Controlador implements IControlador {
@@ -10,8 +16,8 @@ public class Controlador implements IControlador {
     private final Vista vista;
 
     public Controlador(Modelo modelo, Vista vista) {
-        Objects.requireNonNull(modelo, "El modelo es nulo");
-        Objects.requireNonNull(vista, "La vista es nulo");
+        Objects.requireNonNull(modelo, "El modelo no puede ser nulo.");
+        Objects.requireNonNull(vista, "La vista no puede ser nula.");
         this.modelo = modelo;
         this.vista = vista;
         this.vista.getGestorEventos().suscribir(this, Evento.values());
@@ -37,13 +43,13 @@ public class Controlador implements IControlador {
                 case BORRAR_CLIENTE -> {modelo.borrar(vista.leerClienteDni());
                     resultado = "El cliente ha sido borrado.";}
                 case SALIR -> terminar();
-                case BUSCAR_CLIENTE -> vista.mostrarCliente(modelo.buscar(vista.leerCliente()));
+                case BUSCAR_CLIENTE -> vista.mostrarCliente(modelo.buscar(vista.leerClienteDni()));
                 case BORRAR_TRABAJO -> {modelo.borrar(vista.leerRevision());
                     resultado = "El trabajo ha sido borrado.";}
                 case BORRAR_VEHICULO -> {modelo.borrar(vista.leerVehiculoMatricula());
                     resultado = "El vehículo ha sido borrado.";}
                 case BUSCAR_TRABAJO -> vista.mostrarTrabajo(modelo.buscar(vista.leerTrabajoVehiculo()));
-                case BUSCAR_VEHICULO -> vista.mostrarVehiculo(modelo.buscar(vista.leerVehiculo()));
+                case BUSCAR_VEHICULO -> vista.mostrarVehiculo(modelo.buscar(vista.leerVehiculoMatricula()));
                 case CERRAR_TRABAJO -> {modelo.cerrar(vista.leerTrabajoVehiculo(), vista.leerFechaCierre());
                     resultado = "El trabajo ha sido cerrado.";}
                 case LISTAR_CLIENTES -> modelo.getClientes();

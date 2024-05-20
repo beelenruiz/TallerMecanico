@@ -15,14 +15,14 @@ import java.util.List;
 import java.util.Objects;
 
 public class Clientes implements IClientes {
-    private static final String FICHERO_CLIENTES = "clientes.xml";
-    private static final String RAIZ = "datos";
+    private static final String FICHERO_CLIENTES = String.format("%s%s%s", "datos", File.separator, "clientes.xml");
+    private static final String RAIZ = "clientes";
     private static final String CLIENTE = "cliente";
     private static final String NOMBRE = "nombre";
     private static final String DNI = "dni";
     private static final String TELEFONO = "telefono";
-    private static Clientes instancia;
 
+    private static Clientes instancia;
     private final List<Cliente> coleccionCliente;
     private Clientes(){
         coleccionCliente = new ArrayList<>();
@@ -32,18 +32,27 @@ public class Clientes implements IClientes {
         if(instancia == null){
             instancia = new Clientes();
         }
-        return  instancia;
+        return instancia;
     }
 
+    @Override
     public void comenzar(){
-        procesarDocumentoXml(UtilidadesXml.leerDocumentoXml(String.format("%s%s%s", RAIZ, File.separator, FICHERO_CLIENTES)));
+        Document documentoXml = UtilidadesXml.leerDocumentoXml(FICHERO_CLIENTES);
+        if (documentoXml != null) {
+            procesarDocumentoXml(documentoXml);
+            System.out.printf("Fichero %s leído correctamente.%n", FICHERO_CLIENTES);
+        }
     }
     private void procesarDocumentoXml(Document documentoXml){
         NodeList clientes = documentoXml.getElementsByTagName("clientes");
-        for(int i=0; i < clientes.getLength(); i++){
+        for(int i = 0; i < clientes.getLength(); i++){
             Node cliente = clientes.item(i);
-            if(cliente.getNodeType() == Node.ELEMENT_NODE){
-                coleccionCliente.add(getCliente((Element) cliente));
+            try {
+                if (cliente.getNodeType() == Node.ELEMENT_NODE) {
+                    insertar(getCliente((Element) cliente));
+                }
+            }catch (OperationNotSupportedException | IllegalArgumentException|NullPointerException e) {
+                System.out.printf("Error al leer el cliente %d. --> %s%n", i, e.getMessage());
             }
         }
     }
@@ -55,18 +64,22 @@ public class Clientes implements IClientes {
         return new Cliente(nombre, dni, telefono);
     }
 
+    @Override
     public void terminar(){
-        UtilidadesXml.escribirDocumentoXml(crearDocumentoXml(), String.format("%s%s%s", RAIZ, File.separator, FICHERO_CLIENTES));
+        Document documentoXml = crearDocumentoXml();
+        UtilidadesXml.escribirDocumentoXml(documentoXml, FICHERO_CLIENTES);
     }
     private Document crearDocumentoXml(){
         DocumentBuilder constructor = UtilidadesXml.crearConstructorDocumentoXml();
         Document documentoXml = null;
         if (constructor != null) {
             documentoXml = constructor.newDocument();
-            documentoXml.appendChild(documentoXml.createElement("clientes"));
+            documentoXml.appendChild(documentoXml.createElement(RAIZ));
             for(Cliente cliente: coleccionCliente){
                Element elementoCliente = getElemento(documentoXml, cliente);
-               documentoXml.getDocumentElement().appendChild(elementoCliente);
+                if (elementoCliente.getNodeType() == Node.ELEMENT_NODE) {
+                    documentoXml.getDocumentElement().appendChild(elementoCliente);
+                }
             }
         }
         return documentoXml;
@@ -117,6 +130,7 @@ public class Clientes implements IClientes {
 
     @Override
     public Cliente buscar(Cliente cliente) {
+        System.out.println("buscando");
         Objects.requireNonNull(cliente, "No se puede buscar un cliente nulo.");
         int indice = coleccionCliente.indexOf(cliente);
         return (indice == -1) ? null : coleccionCliente.get(indice);

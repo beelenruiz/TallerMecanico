@@ -1,6 +1,5 @@
 package org.iesalandalus.programacion.tallermecanico.modelo.negocio.ficheros;
 
-import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Cliente;
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Vehiculo;
 import org.iesalandalus.programacion.tallermecanico.modelo.negocio.IVehiculos;
 import org.w3c.dom.Document;
@@ -16,8 +15,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class Vehiculos implements IVehiculos {
-    private static final String FICHERO_VEHICULOS = "vehiculos.xml";
-    private static final String RAIZ = "datos";
+    private static final String FICHERO_VEHICULOS = String.format("%s%s%s", "datos", File.separator, "vehiculos.xml");
+    private static final String RAIZ = "vehiculos";
     private static final String VEHICULO = "vehiculo";
     private static final String MARCA = "marca";
     private static final String MODELO = "modelo";
@@ -37,15 +36,24 @@ public class Vehiculos implements IVehiculos {
         return instancia;
     }
 
-    public void comenzar(){
-        procesarDocumentoXml(UtilidadesXml.leerDocumentoXml(String.format("%s%s%s", RAIZ, File.separator, FICHERO_VEHICULOS)));
+    @Override
+    public void comenzar() {
+        Document documentoXml = UtilidadesXml.leerDocumentoXml(FICHERO_VEHICULOS);
+        if (documentoXml != null) {
+            procesarDocumentoXml(documentoXml);
+            System.out.printf("Fichero %s leído correctamente.%n", FICHERO_VEHICULOS);
+        }
     }
     private void procesarDocumentoXml(Document documentoXml) {
         NodeList vehiculos = documentoXml.getElementsByTagName("vehiculos");
         for (int i = 0; i < vehiculos.getLength(); i++){
             Node vehiculo = vehiculos.item(i);
-            if (vehiculo.getNodeType() == Node.ELEMENT_NODE){
-                coleccionVehiculo.add(getVehiculo((Element) vehiculo));
+            try {
+                if (vehiculo.getNodeType() == Node.ELEMENT_NODE) {
+                    insertar(getVehiculo((Element) vehiculo));
+                }
+            } catch (OperationNotSupportedException|IllegalArgumentException|NullPointerException e) {
+                System.out.printf("Error al leer el vehículo %d. --> %s%n", i, e.getMessage());
             }
         }
     }
@@ -57,18 +65,22 @@ public class Vehiculos implements IVehiculos {
         return new Vehiculo(marca, modelo, matricula);
     }
 
-    public void terminar(){
-        UtilidadesXml.escribirDocumentoXml(crearDocumentoXml(), String.format("%s%s%s", RAIZ, File.separator, FICHERO_VEHICULOS));
+    @Override
+    public void terminar() {
+        Document documentoXml = crearDocumentoXml();
+        UtilidadesXml.escribirDocumentoXml(documentoXml, FICHERO_VEHICULOS);
     }
     private Document crearDocumentoXml() {
         DocumentBuilder constructor = UtilidadesXml.crearConstructorDocumentoXml();
         Document documentoXml = null;
         if (constructor != null) {
             documentoXml = constructor.newDocument();
-            documentoXml.appendChild(documentoXml.createElement("clientes"));
+            documentoXml.appendChild(documentoXml.createElement(RAIZ));
             for(Vehiculo vehiculo: coleccionVehiculo){
                 Element elementovehiculo = getElemento(documentoXml, vehiculo);
-                documentoXml.getDocumentElement().appendChild(elementovehiculo);
+                if (elementovehiculo.getNodeType() == Node.ELEMENT_NODE) {
+                    documentoXml.getDocumentElement().appendChild(elementovehiculo);
+                }
             }
         }
         return documentoXml;

@@ -1,10 +1,7 @@
 package org.iesalandalus.programacion.tallermecanico.modelo.cascada;
 
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.*;
-import org.iesalandalus.programacion.tallermecanico.modelo.negocio.FabricaFuenteDatos;
-import org.iesalandalus.programacion.tallermecanico.modelo.negocio.IClientes;
-import org.iesalandalus.programacion.tallermecanico.modelo.negocio.ITrabajos;
-import org.iesalandalus.programacion.tallermecanico.modelo.negocio.IVehiculos;
+import org.iesalandalus.programacion.tallermecanico.modelo.negocio.*;
 
 import javax.naming.OperationNotSupportedException;
 import java.time.LocalDate;
@@ -17,21 +14,28 @@ public class ModeloCascada implements org.iesalandalus.programacion.tallermecani
     IClientes clientes;
     IVehiculos vehiculos;
     ITrabajos trabajos;
-    private FabricaFuenteDatos fabricaFuenteDatos;
 
     public ModeloCascada(FabricaFuenteDatos fabricaFuenteDatos){
-        this.fabricaFuenteDatos = fabricaFuenteDatos;
+        Objects.requireNonNull(fabricaFuenteDatos, "La fabrica de la fuente de datos no puede ser nula.");
+        IFuenteDatos fuenteDatos = fabricaFuenteDatos.crear();
+        clientes = fuenteDatos.crearClientes();
+        vehiculos = fuenteDatos.crearVehiculos();
+        trabajos = fuenteDatos.crearTrabajos();
     }
 
     @Override
     public void comenzar() {
-        clientes = fabricaFuenteDatos.crear().crearClientes();
-        vehiculos = fabricaFuenteDatos.crear().crearVehiculos();
-        trabajos = fabricaFuenteDatos.crear().crearTrabajos();
+        clientes.comenzar();
+        vehiculos.comenzar();
+        trabajos.comenzar();
+        System.out.println("Modelo comenzado.");
     }
     @Override
     public void terminar() {
-        System.out.println("El modelo ha terminado");
+        trabajos.terminar();
+        vehiculos.terminar();
+        clientes.terminar();
+        System.out.println("Modelo terminado.");
     }
 
     @Override
@@ -56,6 +60,7 @@ public class ModeloCascada implements org.iesalandalus.programacion.tallermecani
 
     @Override
     public Cliente buscar(Cliente cliente) {
+        System.out.println("buscando modelo cascada");
         cliente = Objects.requireNonNull(clientes.buscar(cliente), "No existe un cliente igual");
         return new Cliente(cliente);
     }
