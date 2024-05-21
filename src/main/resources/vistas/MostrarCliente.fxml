@@ -69,17 +69,17 @@
       </GridPane>
       <HBox alignment="BOTTOM_RIGHT" prefHeight="26.0" prefWidth="381.0" spacing="20.0">
          <children>
-            <Button fx:id="btCancelar1" mnemonicParsing="false" onAction="#limpiar" prefHeight="24.0" prefWidth="69.0" style="-fx-background-color: #a019b2;" text="limpiar" textFill="WHITE">
+            <Button mnemonicParsing="false" onAction="#borrar" prefHeight="24.0" prefWidth="69.0" style="-fx-background-color: #a019b2;" text="borrar" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="btAceptar" mnemonicParsing="false" onAction="#aceptar" style="-fx-background-color: #a019b2;" text="aceptar" textFill="WHITE">
+            <Button mnemonicParsing="false" onAction="#modificar" style="-fx-background-color: #a019b2;" text="modificar" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="btCancelar" mnemonicParsing="false" onAction="#cancelar" prefHeight="24.0" prefWidth="69.0" style="-fx-background-color: #a019b2;" text="cancelar" textFill="WHITE">
+            <Button mnemonicParsing="false" onAction="#cancelar" prefHeight="24.0" prefWidth="69.0" style="-fx-background-color: #a019b2;" text="cancelar" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>

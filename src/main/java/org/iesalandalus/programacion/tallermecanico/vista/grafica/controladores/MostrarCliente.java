@@ -36,14 +36,19 @@ public class MostrarCliente extends Controlador {
     }
 
     @FXML
-    void limpiar() {
+    void borrar() {
+        
+    }
+
+    @FXML
+    void modificar() {
 
     }
 
     public void actualizar(Cliente cliente){
-        tfNombre.setPromptText(cliente.getNombre());
-        tfDni.setPromptText(cliente.getDni());
-        tfTelefono.setPromptText(cliente.getTelefono());
+        tfNombre.setText(cliente.getNombre());
+        tfDni.setText(cliente.getDni());
+        tfTelefono.setText(cliente.getTelefono());
     }
 
 }

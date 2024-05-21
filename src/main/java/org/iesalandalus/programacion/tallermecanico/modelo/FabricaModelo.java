@@ -4,7 +4,7 @@ import org.iesalandalus.programacion.tallermecanico.modelo.cascada.ModeloCascada
 import org.iesalandalus.programacion.tallermecanico.modelo.negocio.FabricaFuenteDatos;
 
 public enum FabricaModelo {
-    FICHEROS {
+    CASCADA {
         @Override
         public Modelo crear(FabricaFuenteDatos fabricaFuenteDatos) {
             return new ModeloCascada(fabricaFuenteDatos);
