@@ -56,7 +56,7 @@ public class Controlador implements IControlador {
                 case BUSCAR_VEHICULO -> vista.mostrarVehiculo(modelo.buscar(vista.leerVehiculoMatricula()));
                 case CERRAR_TRABAJO -> {modelo.cerrar(vista.leerTrabajoVehiculo(), vista.leerFechaCierre());
                     resultado = "El trabajo ha sido cerrado.";}
-                case LISTAR_CLIENTES -> modelo.getClientes();
+                case LISTAR_CLIENTES -> vista.mostrarClientes(modelo.getClientes());
                 case INSERTAR_CLIENTE -> {modelo.insertar(vista.leerCliente());
                     resultado = "El cliente ha sido insertado.";}
                 case LISTAR_VEHICULOS -> vista.mostrarVehiculos(modelo.getVehiculos());

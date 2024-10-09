@@ -2,8 +2,12 @@ package org.iesalandalus.programacion.tallermecanico.vista.grafica.controladores
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Border;
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Cliente;
+import org.iesalandalus.programacion.tallermecanico.vista.eventos.Evento;
+import org.iesalandalus.programacion.tallermecanico.vista.grafica.VistaGrafica;
 import org.iesalandalus.programacion.tallermecanico.vista.grafica.utilidades.Controlador;
+import org.iesalandalus.programacion.tallermecanico.vista.grafica.utilidades.Controles;
 import org.iesalandalus.programacion.tallermecanico.vista.grafica.utilidades.Dialogos;
 
 public class LeerCliente extends Controlador {
@@ -17,7 +21,6 @@ public class LeerCliente extends Controlador {
     @FXML
     private TextField tfTelefono;
 
-    VentanaPrincipal ventanaPrincipal;
     boolean cancelado = true;
 
     public boolean isCancelado(){
@@ -45,11 +48,18 @@ public class LeerCliente extends Controlador {
     void aceptar() {
         cancelado = false;
         try{
-            ventanaPrincipal.insertarCliente();
+            VistaGrafica.getInstancia().getGestorEventos().notificar(Evento.INSERTAR_CLIENTE);
             Dialogos.mostrarDialogoInformacion("Cliente insertado", String.format("El cliente %s ha sido insertado", getCliente()), getEscenario());
             getEscenario().close();
         }catch (Exception e){
             Dialogos.mostrarDialogoError("Error de inserción", String.format("ERROR: %s", e.getMessage()), getEscenario());
         }
+    }
+
+    @FXML
+    void initialize() {
+        tfDni.textProperty().addListener(observable -> Controles.validarCampoTexto(Cliente.ER_DNI, tfDni));
+        tfNombre.textProperty().addListener(observable -> Controles.validarCampoTexto(Cliente.ER_NOMBRE, tfNombre));
+        tfTelefono.textProperty().addListener(observable -> Controles.validarCampoTexto(Cliente.ER_TELEFONO, tfTelefono));
     }
 }

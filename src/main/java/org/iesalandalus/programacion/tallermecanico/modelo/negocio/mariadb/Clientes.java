@@ -1,5 +1,7 @@
 package org.iesalandalus.programacion.tallermecanico.modelo.negocio.mariadb;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Cliente;
 import org.iesalandalus.programacion.tallermecanico.modelo.negocio.IClientes;
 import org.mariadb.jdbc.Connection;

@@ -11,9 +11,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="274.0" prefWidth="381.0" style="-fx-background-color: #d1a6da;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.iesalandalus.programacion.tallermecanico.vista.grafica.controladores.MostrarCliente">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="274.0" prefWidth="391.0" style="-fx-background-color: #d1a6da;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.iesalandalus.programacion.tallermecanico.vista.grafica.controladores.NombreYTelefono">
    <children>
-      <Label text="DATOS DEL CLIENTE" textFill="#a019b2">
+      <Label text="MODIFICACIONES" textFill="#a019b2">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>
@@ -21,45 +21,34 @@
             <Insets />
          </VBox.margin>
       </Label>
-      <GridPane alignment="CENTER" prefHeight="90.0" prefWidth="296.0" vgap="20.0">
+      <GridPane alignment="CENTER" prefHeight="70.0" prefWidth="301.0" vgap="20.0">
          <columnConstraints>
-            <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="166.0" minWidth="10.0" prefWidth="133.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="239.0" minWidth="10.0" prefWidth="169.0" />
+            <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="166.0" minWidth="10.0" prefWidth="151.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="239.0" minWidth="10.0" prefWidth="160.0" />
          </columnConstraints>
          <rowConstraints>
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Label alignment="CENTER_RIGHT" prefHeight="21.0" prefWidth="86.0" text="NOMBRE:  ">
+            <Label alignment="CENTER_RIGHT" prefHeight="21.0" prefWidth="143.0" text="NUEVO NOMBRE:  ">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <TextField fx:id="tfNombre" editable="false" prefHeight="25.0" prefWidth="213.0" GridPane.columnIndex="1">
+            <TextField fx:id="tfNombre" prefHeight="25.0" prefWidth="137.0" GridPane.columnIndex="1">
                <GridPane.margin>
-                  <Insets left="5.0" right="30.0" />
+                  <Insets left="5.0" right="20.0" />
                </GridPane.margin>
             </TextField>
-            <Label alignment="CENTER_RIGHT" prefHeight="20.0" prefWidth="42.0" text="DNI:  " GridPane.rowIndex="1">
+            <Label alignment="CENTER_RIGHT" prefHeight="21.0" prefWidth="155.0" text="NUEVO TELÉFONO:  " GridPane.rowIndex="1">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Label alignment="CENTER_RIGHT" prefHeight="21.0" prefWidth="91.0" text="TELÉFONO:  " GridPane.rowIndex="2">
-               <font>
-                  <Font name="System Bold" size="15.0" />
-               </font>
-            </Label>
-            <TextField fx:id="tfDni" editable="false" prefHeight="25.0" prefWidth="213.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <TextField fx:id="tfTelefono" prefHeight="25.0" prefWidth="102.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <GridPane.margin>
-                  <Insets left="5.0" right="60.0" />
-               </GridPane.margin>
-            </TextField>
-            <TextField fx:id="tfTelefono" editable="false" prefHeight="25.0" prefWidth="213.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-               <GridPane.margin>
-                  <Insets left="5.0" right="60.0" />
+                  <Insets left="5.0" right="50.0" />
                </GridPane.margin>
             </TextField>
          </children>
@@ -69,12 +58,12 @@
       </GridPane>
       <HBox alignment="BOTTOM_RIGHT" prefHeight="26.0" prefWidth="381.0" spacing="20.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#borrar" prefHeight="24.0" prefWidth="69.0" style="-fx-background-color: #a019b2;" text="borrar" textFill="WHITE">
+            <Button mnemonicParsing="false" onAction="#limpiar" prefHeight="24.0" prefWidth="69.0" style="-fx-background-color: #a019b2;" text="limpiar" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#modificar" style="-fx-background-color: #a019b2;" text="modificar" textFill="WHITE">
+            <Button mnemonicParsing="false" onAction="#aceptar" style="-fx-background-color: #a019b2;" text="aceptar" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>

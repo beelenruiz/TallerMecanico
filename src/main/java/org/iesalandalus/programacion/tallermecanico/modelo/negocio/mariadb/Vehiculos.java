@@ -1,6 +1,5 @@
 package org.iesalandalus.programacion.tallermecanico.modelo.negocio.mariadb;
 
-import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Cliente;
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Vehiculo;
 import org.iesalandalus.programacion.tallermecanico.modelo.negocio.IVehiculos;
 import org.mariadb.jdbc.Connection;

@@ -5,10 +5,10 @@ import java.util.Objects;
 import static java.lang.Integer.parseInt;
 
 public class Cliente {
-    private static final String ER_NOMBRE = "[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+(?: [A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)*+";
+    public static final String ER_NOMBRE = "[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+(?: [A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)*+";
     //el + es solo por el sonarlint
-    private static final String ER_DNI = "\\d{8}[A-Za-z]";
-    private static final String ER_TELEFONO = "\\d{9}";
+    public static final String ER_DNI = "\\d{8}[A-Za-z]";
+    public static final String ER_TELEFONO = "\\d{9}";
     String nombre;
     String dni;
     String telefono;

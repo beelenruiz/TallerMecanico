@@ -1,6 +1,8 @@
 package org.iesalandalus.programacion.tallermecanico.vista.grafica;
 
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Cliente;
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.TipoTrabajo;
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Trabajo;
@@ -9,13 +11,17 @@ import org.iesalandalus.programacion.tallermecanico.vista.Vista;
 import org.iesalandalus.programacion.tallermecanico.vista.eventos.Evento;
 import org.iesalandalus.programacion.tallermecanico.vista.eventos.GestorEventos;
 import org.iesalandalus.programacion.tallermecanico.vista.grafica.controladores.LeerDni;
+import org.iesalandalus.programacion.tallermecanico.vista.grafica.controladores.ListarClientes;
 import org.iesalandalus.programacion.tallermecanico.vista.grafica.controladores.MostrarCliente;
+import org.iesalandalus.programacion.tallermecanico.vista.grafica.controladores.NombreYTelefono;
 import org.iesalandalus.programacion.tallermecanico.vista.grafica.utilidades.Controlador;
 import org.iesalandalus.programacion.tallermecanico.vista.grafica.utilidades.Controladores;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+
+import static org.iesalandalus.programacion.tallermecanico.vista.grafica.utilidades.Controladores.*;
 
 public class VistaGrafica implements Vista {
     private final GestorEventos gestorEventos = new GestorEventos(Evento.values());
@@ -55,9 +61,13 @@ public class VistaGrafica implements Vista {
 
     public MostrarCliente mostrarCliente;
     public LeerDni leerDni;
+    public NombreYTelefono nombreYTelefono;
+    public ListarClientes listarClientes;
     public void inicializar(){
-        leerDni = (LeerDni) Controladores.get("/vistas/LeerDni.fxml", "Leer dni", null);
-        mostrarCliente = (MostrarCliente) Controladores.get("/vistas/MostrarCliente.fxml", "Cliente", null);
+        leerDni = (LeerDni) get("/vistas/LeerDni.fxml", "Leer dni", null);
+        mostrarCliente = (MostrarCliente) get("/vistas/MostrarCliente.fxml", "Cliente", null);
+        nombreYTelefono = (NombreYTelefono) get("/vistas/NombreYTelefono.fxml", "Modificar cliente", null);
+        listarClientes = (ListarClientes) get("/vistas/ListarClientes.fxml", "Lista de Clientes", null);
     }
 
     @Override
@@ -72,18 +82,17 @@ public class VistaGrafica implements Vista {
 
     @Override
     public Cliente leerClienteDni() {
-        System.out.println("leer cliente");
         return Cliente.get(leerDni.getDni());
     }
 
     @Override
     public String leerNuevoNombre() {
-        return null;
+        return nombreYTelefono.getNombre();
     }
 
     @Override
     public String leerNuevoTelefono() {
-        return null;
+        return nombreYTelefono.getTelefono();
     }
 
     @Override
@@ -138,7 +147,6 @@ public class VistaGrafica implements Vista {
 
     @Override
     public void mostrarCliente(Cliente cliente) {
-        System.out.println("mostrar");
         mostrarCliente.actualizar(cliente);
         mostrarCliente.getEscenario().showAndWait();
     }
@@ -155,11 +163,9 @@ public class VistaGrafica implements Vista {
 
     @Override
     public void mostrarClientes(List<Cliente> clientes) {
-        //if (this.clientes == null){
-        //    this.clientes = clientes;
-        //} else {
-        //    mostrarCliente.actualizar(clientes).show();
-        //}
+        ObservableList<Cliente> CLIENTES = FXCollections.observableArrayList(clientes);
+        listarClientes.renenar(CLIENTES);
+        listarClientes.getEscenario().showAndWait();
     }
 
     @Override

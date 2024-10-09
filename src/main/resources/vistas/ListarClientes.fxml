@@ -19,22 +19,21 @@
             <Insets />
          </VBox.margin>
       </Label>
-      <TableView prefHeight="200.0" prefWidth="200.0">
+      <TableView fx:id="tvClientes" prefHeight="200.0" prefWidth="200.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="NOMBRE" />
-          <TableColumn prefWidth="75.0" text="DNI" />
+          <TableColumn fx:id="tcNombre" prefWidth="235.0" text="NOMBRE" />
+          <TableColumn fx:id="tcDni" prefWidth="140.0" text="DNI" />
+            <TableColumn fx:id="tcTelefono" prefWidth="140.0" text="TELEFONO" />
         </columns>
          <VBox.margin>
             <Insets left="50.0" right="50.0" />
          </VBox.margin>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
       </TableView>
       <HBox alignment="BOTTOM_RIGHT" prefHeight="26.0" prefWidth="381.0" spacing="20.0">
          <children>
-            <Button fx:id="btCancelar1" mnemonicParsing="false" onAction="#limpiar" prefHeight="24.0" prefWidth="69.0" style="-fx-background-color: #a019b2;" text="limpiar" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="13.0" />
-               </font>
-            </Button>
             <Button fx:id="btAceptar" mnemonicParsing="false" onAction="#aceptar" style="-fx-background-color: #a019b2;" text="aceptar" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="13.0" />

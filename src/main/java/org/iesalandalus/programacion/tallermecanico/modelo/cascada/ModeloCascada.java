@@ -60,7 +60,6 @@ public class ModeloCascada implements org.iesalandalus.programacion.tallermecani
 
     @Override
     public Cliente buscar(Cliente cliente) {
-        System.out.println("buscando modelo cascada");
         cliente = Objects.requireNonNull(clientes.buscar(cliente), "No existe un cliente igual");
         return new Cliente(cliente);
     }

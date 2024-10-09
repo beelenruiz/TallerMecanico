@@ -1,8 +1,6 @@
 package org.iesalandalus.programacion.tallermecanico.modelo.dominio;
 
-import javax.naming.OperationNotSupportedException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class Revision extends Trabajo {

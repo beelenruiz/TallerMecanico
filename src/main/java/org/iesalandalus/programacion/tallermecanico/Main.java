@@ -31,6 +31,8 @@ public class  Main {
                 fabricaFuenteDatos = FabricaFuenteDatos.FICHEROS;
             } else if (argumento.equalsIgnoreCase("fdmariadb")) {
                 fabricaFuenteDatos = FabricaFuenteDatos.MARIADB;
+            } else if (argumento.equalsIgnoreCase("fdmongodb")) {
+                fabricaFuenteDatos = FabricaFuenteDatos.MONGODB;
             }
         }
         return new Pair<>(fabricaVista, fabricaFuenteDatos);

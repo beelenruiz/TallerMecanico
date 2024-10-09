@@ -7,7 +7,6 @@ import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Vehiculo;
 import org.iesalandalus.programacion.tallermecanico.vista.eventos.Evento;
 import org.iesalandalus.programacion.tallermecanico.vista.eventos.GestorEventos;
 
-import javax.naming.OperationNotSupportedException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;

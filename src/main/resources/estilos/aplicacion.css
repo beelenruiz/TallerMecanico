@@ -1,0 +1,7 @@
+.valido {
+	-fx-border-color: #8DBDEE;
+}
+
+.invalido {
+	-fx-border-color: #E75757;
+}

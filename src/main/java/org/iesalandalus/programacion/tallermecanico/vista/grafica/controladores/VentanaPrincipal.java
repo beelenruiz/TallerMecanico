@@ -36,8 +36,8 @@ public class VentanaPrincipal extends Controlador {
     }
 
     @FXML
-    void listarClientes(ActionEvent event) {
-
+    void listarClientes() {
+        VistaGrafica.getInstancia().getGestorEventos().notificar(Evento.LISTAR_CLIENTES);
     }
 
     @FXML
